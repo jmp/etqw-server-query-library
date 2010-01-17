@@ -12,7 +12,7 @@ def strip_colors(text):
     """Strips color codes from text."""
     return re.sub(r'\^.?', '', text)
 
-def fetch_data((ip, port)):
+def fetch_data(ip, port):
     """Sends status query to server and returns the data."""
     vars = {}
     players = {}
