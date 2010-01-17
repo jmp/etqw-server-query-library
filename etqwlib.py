@@ -6,6 +6,7 @@ from struct import unpack
 WARMUP = 1
 IN_PROGRESS = 2
 REVIEWING = 4
+SECOND_ROUND = 8 # For stopwatch
 
 def strip_colors(text):
     """Strips color codes from text."""
