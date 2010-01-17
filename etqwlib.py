@@ -89,4 +89,3 @@ def fetch_data((ip, port)):
         players[id]['deaths'] = int(deaths)
 
     return (vars, players, info)
-
