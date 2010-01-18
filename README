@@ -13,7 +13,8 @@ is a dictionary:
 
 ::
 
-	vars, players, info = fetch_data('example.com', 27733)
+	import etqwlib
+	vars, players, info = etqwlib.fetch_data('example.com', 27733)
 	print vars['si_maxplayers']  # '23'
 	print players[10]['nick']    # nick of player id 10 (with colors stripped)
 	print info['time_left']      # number of seconds left
