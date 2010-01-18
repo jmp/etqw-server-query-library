@@ -39,7 +39,7 @@ def fetch_data(ip, port):
     data = '\0'.join(items[(num_pairs * 2) + 2:])
 
     # Players
-    while not data[0] == '\x20':
+    while data[0] != '\x20':
         id, ping, rate = unpack('3B', data[:3])
         nick = data[3:].split('\0', 1)[0]
         clantag_pos = unpack('B', data[4 + len(nick)])[0]
@@ -72,9 +72,7 @@ def fetch_data(ip, port):
     data = data[12:]
 
     # Extra data
-    while True:
-        if data[0] == '\x20':
-            break
+    while data[0] != '\x20':
         id, xp = unpack('<Bf', data[0:5])
         team = data[5:].split('\0', 1)[0]
         kills, deaths = unpack('<2i', data[6 + len(team):14 + len(team)])
