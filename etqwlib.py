@@ -3,10 +3,10 @@ import socket
 from struct import unpack
 
 # States
-WARMUP = 1
-IN_PROGRESS = 2
-REVIEWING = 4
-SECOND_ROUND = 8 # For stopwatch
+WARMUP       = 1 << 0
+IN_PROGRESS  = 1 << 1
+REVIEWING    = 1 << 2
+SECOND_ROUND = 1 << 3 # For stopwatch
 
 def strip_colors(text):
     """Strips color codes from text."""
@@ -30,7 +30,7 @@ def fetch_data(ip, port):
 
     # Server variables
     items = data.split('\0')
-    pairs = [(x, y) for x, y in zip(items[::2], items[1::2])]
+    pairs = zip(items[::2], items[1::2])
     num_pairs = 0
     for num_pairs, (name, value) in enumerate(pairs):
         if name == value == '':
@@ -50,7 +50,7 @@ def fetch_data(ip, port):
 
         player = {}
         player['ping'] = int(ping)
-        player['rate'] = int(rate) # Unused as of version 1.4
+        player['rate'] = int(rate) # Not used as of version 1.4
         player['name'] = strip_colors(name)
         player['nick'] = strip_colors(nick)
         player['clantag_pos'] = int(clantag_pos)
@@ -78,7 +78,7 @@ def fetch_data(ip, port):
         kills, deaths = unpack('<2i', data[6 + len(team):14 + len(team)])
         data = data[14 + len(team):]
 
-        # This should happen only if the server is sending malformed data
+        # This should happen only if the server sent malformed data
         if int(id) not in players.keys():
             continue
 
